@@ -1,7 +1,18 @@
+using Cms.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region DataBase Context
+string ConnectionString = "CmsDbContextConnection";
+builder.Services.AddDbContext<CmsDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration[$"ConnectionStrings:{ConnectionString}"]);
+});
+#endregion
 
 var app = builder.Build();
 
