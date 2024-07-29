@@ -60,7 +60,8 @@ namespace Cms.Data.Services
 
         public Article GetArticleById(int id)
         {
-            return _context.Articles.Find(id);
+            var article = _context.Articles.FirstOrDefault(a => a.ArticleId == id);
+            return article;
         }
 
         public bool InsertArticle(Article article)
@@ -119,6 +120,11 @@ namespace Cms.Data.Services
                 || a.Content.Contains(query)).ToList();
 
             return articles;
+        }
+
+        public List<Article> RelatedArticles(int id)
+        {
+            return _context.Articles.ToList();
         }
     }
 }

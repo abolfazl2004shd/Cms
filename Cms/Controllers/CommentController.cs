@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cms.Data.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cms.Controllers
 {
     public class CommentController : Controller
     {
-        public IActionResult ArticleComments()
+        private readonly IArticleCommentService _articleCommentService;
+
+        public CommentController(IArticleCommentService articleCommentService)
         {
-            return View();
+            _articleCommentService = articleCommentService;
         }
+    
+
+        //public ActionResult AddCommnent() { }
     }
 }

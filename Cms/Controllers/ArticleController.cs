@@ -11,10 +11,17 @@ namespace Cms.Controllers
         {
             _articleService = articleService;
         }
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var article = _articleService.GetArticleById(id);
             return View(viewName: nameof(Details), model: article);
         }
+        //public ActionResult RelatedArticles(int id)
+        //{
+        //    return PartialView();
+        //}
+
+       
     }
 }

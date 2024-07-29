@@ -8,11 +8,6 @@ namespace Cms.Data.Services
     {
         private readonly CmsDbContext _context = db;
 
-        public List<ArticleComment> AllComments()
-        {
-            return [.. _context.ArticleComments];
-        }
-
         public bool DeleteComment(int id)
         {
             try
@@ -69,5 +64,13 @@ namespace Cms.Data.Services
             var comments = ArticleComments(ArticleId);
             return comments.Count;
         }
+
+        public List<ArticleComment> AllComments(int ArticleId)
+        {
+            var comments = _context.ArticleComments.Where(a => a.ArticleId == ArticleId).ToList();
+            return comments;
+        }
+
+       
     }
 }

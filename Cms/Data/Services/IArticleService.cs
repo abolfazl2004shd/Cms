@@ -5,6 +5,7 @@ namespace Cms.Data.Services
     public interface IArticleService
     {
         Article GetArticleById(int id);
+        List<Article> RelatedArticles(int id);
         List<Article> AllArticles();
         bool InsertArticle(Article Article);
         bool UpdateArticle(int id);
