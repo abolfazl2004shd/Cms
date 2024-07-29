@@ -16,7 +16,13 @@ namespace Cms.Controllers
         public ActionResult Index()
         {
             var articles = _articleService.AllArticles();
-            return View(viewName:nameof(Index) ,model: articles);
+            return View(viewName: nameof(Index), model: articles);
+        }
+
+        public ActionResult Search(string query)
+        {
+            var articles = _articleService.Filter(query);
+            return View(viewName: nameof(Index), model: articles);
         }
     }
 }

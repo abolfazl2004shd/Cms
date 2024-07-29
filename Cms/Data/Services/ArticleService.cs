@@ -1,5 +1,6 @@
 ﻿using Cms.Data.Context;
 using Cms.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cms.Data.Services
 {
@@ -110,6 +111,14 @@ namespace Cms.Data.Services
             }
         }
 
-      
+        public List<Article> Filter(string query)
+        {
+            var articles = _context.Articles.Include(a => a.ArticleGroup)
+                 .Where(a => a.Title.Contains(query)
+                 || a.ShortDescription.Contains(query)
+                || a.Content.Contains(query)).ToList();
+
+            return articles;
+        }
     }
 }

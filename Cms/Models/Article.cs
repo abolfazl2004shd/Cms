@@ -18,7 +18,7 @@ namespace Cms.Models
         public string ShortDescription { get; set; } = string.Empty;
         [Required]
         [StringLength(1000)]
-        public string Context { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
         [Required]
         public DateTime RegistrationDate { get; set; }
         public bool ShowInSlider { get; set; } = false;

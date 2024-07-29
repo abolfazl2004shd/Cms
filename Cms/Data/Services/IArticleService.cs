@@ -11,6 +11,7 @@ namespace Cms.Data.Services
         bool DeleteArticle(int id);
         bool DeleteArticle(Article Article);
         List<Keyword> AllKeywords(int ArticleId);
+        List<Article> Filter(string query);
         bool Save();
     }
 }

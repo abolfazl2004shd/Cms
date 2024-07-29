@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\ArticleGroup\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\" />
   </ItemGroup>
 
