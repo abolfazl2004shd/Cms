@@ -1,14 +1,22 @@
-using Cms.Models;
+using Cms.Data.Context;
+using Cms.Data.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Cms.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IArticleService _articleService;
+
+        public HomeController(IArticleService articleService)
         {
-            return View();
+            _articleService = articleService;
+        }
+
+        public ActionResult Index()
+        {
+            var articles = _articleService.AllArticles();
+            return View(viewName:nameof(Index) ,model: articles);
         }
     }
 }

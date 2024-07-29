@@ -1,1 +1,12 @@
-﻿
+﻿@model List<Article>
+<div class="row tm-row">
+    
+   
+    @foreach(var article in Model)
+    {
+        <partial name="Article" model="article"/>
+    }
+
+</div>
+
+         

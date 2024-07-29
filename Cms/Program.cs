@@ -1,13 +1,21 @@
 using Cms.Data.Context;
+using Cms.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc();
+#region Add Services
+
+#endregion
+builder.Services.AddScoped<IArticleCommentService, ArticleCommentService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<IArticleGroupService, ArticleGroupService>();
 
 #region DataBase Context
-string ConnectionString = "CmsDbContextConnection";
+string ConnectionString = "CmsContextConnection";
 builder.Services.AddDbContext<CmsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration[$"ConnectionStrings:{ConnectionString}"]);

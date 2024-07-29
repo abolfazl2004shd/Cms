@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cms.Data.Context
 {
-    public class CmsDbContext(DbContextOptions<CmsDbContext> options) : DbContext(options)
+    public class CmsDbContext : DbContext
     {
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<PageGroup> PageGroups { get; set; }
-        public DbSet<PageComment> PageComments { get; set; }
+        public CmsDbContext(DbContextOptions<CmsDbContext> options) : base(options)
+        {
+
+        }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("CmsContextConnection");
+            }
+        }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<ArticleGroup> ArticleGroups { get; set; }
+        public DbSet<ArticleComment> ArticleComments { get; set; }
+        public DbSet<Keyword> Keywords { get; set; }
     }
 }

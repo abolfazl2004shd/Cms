@@ -22,17 +22,18 @@ namespace Cms.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cms.Models.Page", b =>
+            modelBuilder.Entity("Cms.Models.Article", b =>
                 {
-                    b.Property<int>("PageId")
+                    b.Property<int>("ArticleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PageId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"));
 
                     b.Property<string>("Context")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
@@ -42,7 +43,8 @@ namespace Cms.Migrations
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<bool>("ShowInSlider")
                         .HasColumnType("bit");
@@ -51,14 +53,14 @@ namespace Cms.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PageId");
+                    b.HasKey("ArticleId");
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Cms.Models.PageComment", b =>
+            modelBuilder.Entity("Cms.Models.ArticleComment", b =>
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
@@ -66,12 +68,12 @@ namespace Cms.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PageId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
@@ -82,12 +84,12 @@ namespace Cms.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("PageId");
+                    b.HasIndex("ArticleId");
 
-                    b.ToTable("PageComments");
+                    b.ToTable("ArticleComments");
                 });
 
-            modelBuilder.Entity("Cms.Models.PageGroup", b =>
+            modelBuilder.Entity("Cms.Models.ArticleGroup", b =>
                 {
                     b.Property<int>("GroupId")
                         .ValueGeneratedOnAdd()
@@ -101,39 +103,74 @@ namespace Cms.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("PageGroups");
+                    b.ToTable("ArticleGroups");
                 });
 
-            modelBuilder.Entity("Cms.Models.Page", b =>
+            modelBuilder.Entity("Cms.Models.Keyword", b =>
                 {
-                    b.HasOne("Cms.Models.PageGroup", "PageGroup")
-                        .WithMany("Pages")
+                    b.Property<int>("KeywordId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KeywordId"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("KeywordId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Keywords");
+                });
+
+            modelBuilder.Entity("Cms.Models.Article", b =>
+                {
+                    b.HasOne("Cms.Models.ArticleGroup", "ArticleGroup")
+                        .WithMany("Articles")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PageGroup");
+                    b.Navigation("ArticleGroup");
                 });
 
-            modelBuilder.Entity("Cms.Models.PageComment", b =>
+            modelBuilder.Entity("Cms.Models.ArticleComment", b =>
                 {
-                    b.HasOne("Cms.Models.Page", "Page")
-                        .WithMany("PageComments")
-                        .HasForeignKey("PageId")
+                    b.HasOne("Cms.Models.Article", "Article")
+                        .WithMany("ArticleComments")
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Page");
+                    b.Navigation("Article");
                 });
 
-            modelBuilder.Entity("Cms.Models.Page", b =>
+            modelBuilder.Entity("Cms.Models.Keyword", b =>
                 {
-                    b.Navigation("PageComments");
+                    b.HasOne("Cms.Models.Article", "Article")
+                        .WithMany("Keywords")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
                 });
 
-            modelBuilder.Entity("Cms.Models.PageGroup", b =>
+            modelBuilder.Entity("Cms.Models.Article", b =>
                 {
-                    b.Navigation("Pages");
+                    b.Navigation("ArticleComments");
+
+                    b.Navigation("Keywords");
+                });
+
+            modelBuilder.Entity("Cms.Models.ArticleGroup", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }
