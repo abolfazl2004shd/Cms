@@ -12,15 +12,12 @@ namespace Cms.Models
         public int ArticleId { get; set; }
 
         [Required]
-        public string Title { get; set; } = string.Empty;
-
-        [Required]
         public string Content { get; set; } = string.Empty;
 
         [Required]
         public DateTime RegistrationDate { get; set; }
 
         [ForeignKey(nameof(ArticleId))]
-        public required Article Article { get; set; }
+        public Article Article { get; set; }
     }
 }

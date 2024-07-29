@@ -37,7 +37,15 @@ namespace Cms.Data.Services
 
         public bool InsertComment(ArticleComment comment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.ArticleComments.Add(comment);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public List<ArticleComment> ArticleComments(int id)
@@ -71,6 +79,6 @@ namespace Cms.Data.Services
             return comments;
         }
 
-       
+
     }
 }

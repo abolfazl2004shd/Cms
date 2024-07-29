@@ -27,7 +27,7 @@
             <div>
                 <h2 class="tm-color-primary tm-post-title">Comments</h2>
                 <hr class="tm-hr-primary tm-mb-45">
-                @foreach (var comment in ArticleCommentService.AllComments(Model.ArticleId))
+                @foreach (var comment in ArticleCommentService.ArticleComments(Model.ArticleId))
                 {
 
                     <div class="tm-comment tm-mb-45">
@@ -40,7 +40,7 @@
                                 @comment.Content
                             </p>
                             <div class="d-flex justify-content-between">
-                                <a href="#" class="tm-color-primary">REPLY</a>
+                                @* <a href="#" class="tm-color-primary">REPLY</a> *@
                                 <span class="tm-color-primary">@comment.RegistrationDate.Format()</span>
                             </div>
                         </div>
@@ -50,19 +50,23 @@
 
                 <form action="" class="mb-5 tm-comment-form">
                     <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+                   @*  <div class="mb-4">
+                        <input placeholder="name" class="form-control" id="txtName" name="name" type="text">
+                    </div> *@
+                  @*   <div class="mb-4">
+                        <input placeholder="email" class="form-control" id="txtEmail" name="email" type="text">
+                    </div> *@
                     <div class="mb-4">
-                        <input placeholder="name" class="form-control" name="name" type="text">
-                    </div>
-                    <div class="mb-4">
-                        <input placeholder="email" class="form-control" name="email" type="text">
-                    </div>
-                    <div class="mb-4">
-                        <textarea placeholder="message" class="form-control" name="message" rows="6"></textarea>
+                        <textarea placeholder="content" class="form-control" id="content" name="content" rows="6"></textarea>
                     </div>
                     <div class="text-right">
-                        <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>
+                        <button class="tm-btn tm-btn-primary tm-btn-small" onclick="AddComment()">Submit</button>
                     </div>
                 </form>
+
+
+
+
             </div>
         </div>
     </div>
@@ -91,7 +95,7 @@
             {
                 <a href="#" class="d-block tm-mb-40">
                     <figure>
-                        <img src="img/img-02.jpg" alt="Image" class="mb-3 img-fluid">
+                        <img src="~/Images/comment-@(Model.GroupId).jpg" alt="Image" class="mb-3 img-fluid">
                         <figcaption class="tm-color-primary">Duis mollis diam nec ex viverra scelerisque a sit</figcaption>
                     </figure>
                 </a>
@@ -100,3 +104,20 @@
         </div>
     </aside>
 </div>
+
+
+<script>
+    function AddComment() {
+       
+        $.ajax({
+            url: "/Comment/AddComment/" + @Model.ArticleId,
+            type: "GET",
+            data: {
+                content: $("#content").val()
+            }
+        }).done(function () {
+            $("#content").val(""); // Assuming you also want to clear the content field
+        });
+    }
+
+</script>
